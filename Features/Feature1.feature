@@ -55,4 +55,10 @@ Scenario: verificar las opciones del DropDown Categoria
 	| Más vendidos									|
 	| Tiendas oficiales								|
 	| Ver más categorías							|
+
 	
+@Test5
+Scenario: Agregar una prenda al carrito 
+	Given Navegar a Mecado Libre
+	When Buscar Prenda y agregarla al carrito
+	Then Verificar que se agrego correctamente
