@@ -115,3 +115,4 @@ C:\Users\titim\OneDrive\Escritorio\CURSO\C#\MercadoLibreTests\bin\Debug\net6.0\s
 C:\Users\titim\OneDrive\Escritorio\CURSO\C#\MercadoLibreTests\bin\Debug\net6.0\selenium-manager\macos\selenium-manager
 C:\Users\titim\OneDrive\Escritorio\CURSO\C#\MercadoLibreTests\bin\Debug\net6.0\selenium-manager\windows\selenium-manager.exe
 C:\Users\titim\OneDrive\Escritorio\CURSO\C#\MercadoLibreTests\bin\Debug\net6.0\WebDriver.dll
+C:\Users\titim\OneDrive\Escritorio\CURSO\C#\MercadoLibreTests\bin\Debug\net6.0\WebDriver.Support.dll

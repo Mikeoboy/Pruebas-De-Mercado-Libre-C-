@@ -11,6 +11,19 @@ namespace MercadoLibreTests
 {
     public class GenericWait
     {
+
+        /* Este método Wait en C# utiliza un bucle do-while para intentar ejecutar una función waitForTrue hasta que devuelve un valor true o se alcanza 
+           el tiempo de espera máximo especificado en el parámetro timeout. El método toma cuatro parámetros:
+
+       - waitForTrue es una función que devuelve un valor booleano y representa la condición que se está esperando que sea verdadera.
+       - retrytime es el tiempo que se espera antes de volver a intentar la condición.
+       - timeout es el tiempo máximo que se espera antes de abandonar el bucle y regresar false.
+       - throwException es un valor booleano que indica si se debe lanzar una excepción si se alcanza el tiempo de espera máximo y la condición no se cumple.
+        Dentro del bucle do-while, se intenta ejecutar la función waitForTrue y se verifica si devuelve true. Si es así, el método regresa true. Si la función waitForTrue lanza una excepción, se captura en el bloque catch y se asigna a la variable ex. Si throwException es verdadero, la excepción se re-lanza una vez que se alcanza el tiempo de espera máximo y la condición no se cumple.
+
+        Después de cada intento de ejecutar la función waitForTrue, el hilo se duerme durante el tiempo especificado en retrytime.
+        Si se alcanza el tiempo de espera máximo especificado en timeout y la condición no se cumple, el método regresa false. 
+        Si throwException es verdadero y una excepción fue capturada anteriormente, el método lanza esa excepción.*/
         public static bool Wait(Func<bool> waitForTrue, TimeSpan retrytime, TimeSpan timeout, bool throwException)
         {
             DateTime now = DateTime.Now;
