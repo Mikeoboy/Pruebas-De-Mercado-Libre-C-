@@ -1,16 +1,18 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MercadoLibreTests
 {
     public sealed class ChromeDriverManager
     {
         private static ChromeDriver driverInstance;
+        private static Actions actionsInstance;
+
 
         private ChromeDriverManager() { }
 
@@ -21,10 +23,22 @@ namespace MercadoLibreTests
                 ChromeOptions options = new ChromeOptions();
 
                 // Add any desired options to the options object here
+                options.AddArguments("--start-maximized");
                 driverInstance = new ChromeDriver(options);
+
             }
             return driverInstance;
         }
+
+        public static Actions GetActions()
+        {
+            if (actionsInstance == null)
+            {
+                actionsInstance = new Actions(GetDriver());
+            }
+            return actionsInstance;
+        }
+
     }
 
 }

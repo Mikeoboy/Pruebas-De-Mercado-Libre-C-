@@ -7,28 +7,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using System.Security.Cryptography.X509Certificates;
 using NUnit.Framework;
+using OpenQA.Selenium.Interactions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MercadoLibreTests
 {
     public class PageObjectModel
     {
         private readonly IWebDriver driver;
+        private readonly Actions action;
         public PageObjectModel()
         {
             driver = ChromeDriverManager.GetDriver();
+            action = ChromeDriverManager.GetActions();
         }
-
 
         public IWebElement TextBox => driver.FindElement(By.Id("cb1-edit"));
         private IWebElement SubmitButton => driver.FindElement(By.XPath("//button[@type='submit']"));
         private IWebElement CategoriasButton => driver.FindElement(By.XPath("//a[text()='Categorías']"));
+        public IWebElement CuidadoDelCabello => driver.FindElement(By.XPath("//*[text()='Cuidado del Cabello']"));
+        public IWebElement CoockiesEntendidoButton => driver.FindElement(By.XPath("//*[text()='Entendido']"));
         public IWebElement IsVisibleArticleAfterSearch(string article) => driver.FindElement(By.XPath($"//h2[contains(text(), '{article}')]"));
         public IWebElement AddToCartButton => driver.FindElement(By.XPath($"//*[text()='Agregar al carrito']//parent::button"));
+        public IWebElement PantalonLevisButton => driver.FindElement(By.XPath("//*[text()='Levi´s Pantalón Hombre 502 Taper Mex Dark 29 29507-0788']"));
         private IWebElement MessageAfterAddToCart => driver.FindElement(By.XPath("//div//*[text()='¡Hola! Para agregar al carrito, ingresa a tu cuenta']"));
         public IReadOnlyList<IWebElement> HeadersCategorias => driver.FindElements(By.XPath($"//ul[@class='nav-menu-list']//li//a")).ToList();
         public IReadOnlyList<IWebElement> DropDownCategoriasOptions => driver.FindElements(By.XPath($"//ul//li[@class='nav-menu-item']//div//ul//li//a")).ToList();
+
 
 
 
@@ -42,13 +48,10 @@ namespace MercadoLibreTests
             SubmitButton.Click();
         }
 
-        public void ClickOnAddCart()
-        {
-            driver.FindElement(By.XPath("//button[text()='Entendido']")).Click();
-            AddToCartButton.Click();
-        }
-        public void ClickOnCategoriasButton() => CategoriasButton.Click();
+        public void ClickOnAddCart() => AddToCartButton.Click();
 
+        public void ClickOnCategoriasButton() => CategoriasButton.Click();
+        public void ClickOnLevisPantalon() => PantalonLevisButton.Click();
         public bool IsMessageAfterAddToCartArticleVisible() => ElementIsPresent(driver, MessageAfterAddToCart, 10);
 
 
@@ -122,6 +125,22 @@ namespace MercadoLibreTests
                 Assert.AreEqual(element, header);
             }
 
+        }
+
+        public bool IsElementPresentOnUI(Table table)
+        {
+            bool IsCategoriesMenuVisible = GenericWait.Wait(() =>
+            {
+                CategoriasButton.Click();
+                var element = driver.FindElement(By.XPath("//*[text()='Hogar y Muebles ']"));
+                action.MoveToElement(element).Perform();
+                var elementMarket = driver.FindElement(By.XPath("//*[text()='Supermercado']"));
+                action.MoveToElement(elementMarket).Perform();
+                CategoriasButton.Click();
+                CompareTwoLists(table, driver.FindElements(By.XPath($"(//ul//li[@class='nav-menu-item'])//div//ul//li//a")).ToList());
+                return true;
+            }, TimeSpan.Zero, TimeSpan.FromSeconds(60), false);
+            return IsCategoriesMenuVisible;
         }
     }
 }

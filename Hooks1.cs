@@ -24,7 +24,6 @@ namespace MercadoLibreTests
         public void FirstBeforeScenario()
         {
             driver.Url = "https://www.mercadolibre.com.mx/";
-            driver.Manage().Window.Maximize();
         }
 
         [AfterScenario]
