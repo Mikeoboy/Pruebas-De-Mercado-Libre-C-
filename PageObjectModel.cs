@@ -83,6 +83,8 @@ namespace MercadoLibreTests
         {
             List<string> listOfValues = new List<string>();
 
+
+
             foreach (var item in table.Rows)
             {
                 var val = item[0];
